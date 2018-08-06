@@ -6,4 +6,10 @@
 + [hsf](hsf) Pandora Boot+HSF
 + [auto-config](autoconfig) Auto Config
 
+# 快速入门
+
+## Pandora Boot
+
+
+## HSF
 
