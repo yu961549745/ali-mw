@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <group name="app">
+        <property name="autoconfig.value" defaultValue="autoconfig" description="autoconfig示例"/>
+    </group>
+    <script>
+        <generate template="auto-config-demo.properties"/>
+    </script>
+</config>
