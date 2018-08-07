@@ -3,8 +3,4 @@
         <h2>TDDL</h2>
         <a href="/tddl">query</a>
     </li>
-    <li>
-        <h2>HSF</h2>
-        <a href="/hsf">hsf invoke</a>
-    </li>
 </ol>
