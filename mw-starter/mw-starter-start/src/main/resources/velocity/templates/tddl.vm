@@ -1,0 +1,10 @@
+<form action="/jdbc/salary" method="get">
+    <p>Query salary by JDBC</p>
+    <p><input type="submit" value="go"/></p>
+</form>
+
+<br/>
+<form action="/mybatis/salary" method="get">
+    <p>Query salary by MyBatis</p>
+    <p><input type="submit" value="go"/></p>
+</form>
