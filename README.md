@@ -261,7 +261,7 @@ public class HelloServiceImpl implements HelloService {
     }
 }
 ```
-3. 配置一个调用
+3. 配置一个调用
 ```java
 @Configuration
 public class HsfConfig {
