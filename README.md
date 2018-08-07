@@ -9,10 +9,6 @@
 + MyBatis
 + TDDL
 
-# 项目目录
-+ [pure](pure) Pandora Boot
-+ [hsf](hsf) Pandora Boot+HSF
-+ [auto-config](autoconfig) Auto Config
 
 # 快速入门
 
@@ -22,6 +18,7 @@
 其次，Pandora Boot 是在 Pandora 的基础之上，发展出的更轻量使用集团中间件的方式；它基于 Pandora 和 Fat Jar 技术，可以直接在 IDE 里启动 Pandora 环境，开发调试等效率都大大提高；
 
 ```java
+// Spring Boot App 标记
 @SpringBootApplication(scanBasePackages = {"yjt"})
 public class Application {
 
@@ -30,7 +27,7 @@ public class Application {
         PandoraBootstrap.run(args);
         // 启动 Spring Boot
         SpringApplication.run(Application.class, args);
-        // Pandora Boot 标记服务启动完成
+        // 标记 Pandora Boot 启动完成
         PandoraBootstrap.markStartupAndWait();
     }
 }
