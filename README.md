@@ -292,3 +292,23 @@ spring.hsf.group=HSF
 spring.hsf.version=1.0.0.DAILY
 spring.hsf.timeout=2000
 ```
+
+# MyBatis
+`application.properties` 
+```
+# Spring boot 配置连接信息
+# 指定配置文件位置
+mybatis.config-location=classpath:/mybatis/mybatis-config.xml
+```
+MyBitas 配置文件
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <mappers>
+        <mapper resource="mybatis/salary-mapper.xml"/>
+    </mappers>
+</configuration>
+```
