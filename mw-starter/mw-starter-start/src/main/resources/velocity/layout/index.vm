@@ -3,18 +3,19 @@
 
 <head>
     <title>mw-test</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h1>It works.</h1>
-    <br/>
-    <pre>
+<h1>It works.</h1>
+<br/>
+<pre>
     Locale :  $!{text.getLocale()}
     Date   :  $!{dateTool.now()}
     </pre>
-    <hr/> $!{screen_content}
-    <hr/>
+<hr/> $!{screen_content}
+<hr/>
 </body>
 
 </html>

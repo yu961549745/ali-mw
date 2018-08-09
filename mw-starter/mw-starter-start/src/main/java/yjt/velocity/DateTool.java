@@ -7,7 +7,7 @@ import org.apache.velocity.tools.generic.SafeConfig;
 
 /**
  * velocity自定义Tool，详见 http://gitlab.alibaba-inc.com/middleware-container/pandora-boot/wikis/spring-boot-velocity
- * 
+ *
  * @author chengxu
  */
 @DefaultKey("dateTool")

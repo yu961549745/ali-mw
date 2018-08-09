@@ -5,12 +5,20 @@
 + Pandora Boot / Spring Boot
 + Spring MVC
 + Velocity
-+ HSF
 + MyBatis
++ HSF
 + TDDL
-
++ ONS
 
 # 快速入门
+
++ 本页
+    + Pandora Boot + Spring Boot
+    + Spring MVC + Velocity
+    + MyBatis + MySQL
++ [HSF](docs/HSF.md)
++ [TDDL](docs/TDDL.md)
++ [ONS](docs/ONS.md)
 
 # Pandora Boot + Spring Boot 
 首先，Pandora Boot 与 Spring Boot 无缝集成，使用 Pandora Boot 的同时也可以充分享受 Spring Boot 的便利；
@@ -153,7 +161,47 @@ spring.velocity.tools-base-packages=yjt.velocity
 其中 `screen_content` 就是 template 渲染的结果
 
 ## Velocity 进阶
+自定义 Tool
+```java
+@DefaultKey("dateTool")// 指定调用的 key
+public class DateTool extends SafeConfig {
+    public Date now() {
+        return new Date();
+    }
+}
+```
+指定 Layout
+```java
+@GetMapping("/")
+@VelocityLayout("/velocity/layout/index.vm")
+public String root() {
+    return "index";
+}
+```
+对应文件
+```html
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>mw-test</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<h1>It works.</h1>
+<br/>
+<pre>
+    Locale :  $!{text.getLocale()}
+    Date   :  $!{dateTool.now()}
+    </pre>
+<hr/> $!{screen_content}
+<hr/>
+</body>
+
+</html>
+```
 ## 返回 Response Body 的 Controller
 ```java
 @RestController
@@ -242,57 +290,6 @@ public class MixController {
 ```
 `@Controller`+`@ResponseBody`=`@RestController`
 
-# HSF
-HSF 是阿里的微服务实现框架
-
-1. 定义一个接口
-```java
-public interface HelloService {
-    String sayHello(String name);
-}
-```
-2. 添加一个实现 (Provider), `@HSFProvider` 声明了 HSF 服务的实现接口
-```java
-@HSFProvider(serviceInterface = HelloService.class)
-public class HelloServiceImpl implements HelloService {
-    @Override
-    public String sayHello(String name) {
-        return "Hello, " + name;
-    }
-}
-```
-3. 配置一个调用
-```java
-@Configuration
-public class HsfConfig {
-    @HSFConsumer
-    private HelloService helloService;
-}
-```
-4. 进行调用, `@Autowired` 是 Spring 的自动装配
-```java
-@Controller
-@RequestMapping(value = "invoke")
-public class HsfController {
-
-    @Autowired
-    private HelloService helloService;
-
-    @RequestMapping(value = "common")
-    public @ResponseBody
-    String invokeHSF(@RequestParam String name) {
-        return helloService.sayHello(name);
-    }
-}
-```
-5. HSF 发布的相关配置 `application.properties`
-```
-# hsf配置，详见 http://gitlab.alibaba-inc.com/middleware-container/pandora-boot/wikis/spring-boot-hsf
-spring.hsf.group=HSF
-spring.hsf.version=1.0.0.DAILY
-spring.hsf.timeout=2000
-```
-
 # MyBatis + MySQL
 1. 配置数据源
 `application.properties` 
@@ -375,7 +372,7 @@ public interface UserMapper {
     void deleteByName(String name);
 }
 ```
-5. 调用 Java 接口
+5. 调用 Java 接口
 ```java
 @RestController
 @RequestMapping("/db")

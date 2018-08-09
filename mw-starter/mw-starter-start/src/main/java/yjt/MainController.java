@@ -9,9 +9,9 @@ import com.alibaba.boot.velocity.annotation.VelocityLayout;
 /**
  * Spring Mvc的根路径、健康检查等。
  * <p>
- * 其中使用了velocity，@VelocityLayout声明了页面使用的layout。详见
- * http://gitlab.alibaba-inc.com/middleware-container/pandora-boot/wikis/spring-boot-velocity
- * 
+ * 其中使用了velocity，@VelocityLayout声明了页面使用的layout。详见 http://gitlab.alibaba-inc
+ * .com/middleware-container/pandora-boot/wikis/spring-boot-velocity
+ *
  * @author chengxu
  */
 @Controller
@@ -23,22 +23,12 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/tddl")
-    public String tddl() {
-        return "tddl";
-    }
-
-    @GetMapping("/hsf")
-    public String hsf() {
-        return "hsf";
-    }
-
     /**
-     * 健康检查，系统部署需要
-     * 请不要删除！！
+     * 健康检查，系统部署需要 请不要删除！！
      */
     @GetMapping("/checkpreload.htm")
-    public @ResponseBody String checkPreload() {
+    public @ResponseBody
+    String checkPreload() {
         return "success";
     }
 }
