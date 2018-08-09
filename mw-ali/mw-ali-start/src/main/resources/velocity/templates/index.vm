@@ -1,0 +1,18 @@
+<ol>
+<li>
+    <h2>ONS</h2>
+    <a href="/ons">send message</a>
+</li>
+<li>
+    <h2>TDDL</h2>
+    <a href="/tddl">query</a>
+</li>
+<li>
+    <h2>HSF</h2>
+    <a href="/hsf">hsf invoke</a>
+</li>
+<li>
+    <h2>Diamond</h2>
+    <a href="/diamond">show diamond configuration</a>
+</li>
+</ol>

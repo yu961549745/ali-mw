@@ -1,0 +1,11 @@
+
+<form action="/send" method="post">
+    <p>Send meassage by ons</p>
+    <hr/>
+    <p>
+        <label>message body : </label>
+        <input type="text" name="messageBody"/>
+    </p>
+
+    <p><input type="submit"/></p>
+</form>

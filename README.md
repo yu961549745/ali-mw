@@ -302,6 +302,18 @@ spring.datasource.username=root
 spring.datasource.password=12345678
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 ```
+Maven
+```xml
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.46</version>
+</dependency>
+```
 2. MyBitas 配置文件
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
