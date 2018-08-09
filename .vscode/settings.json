@@ -9,5 +9,9 @@
     },
     "files.encoding": "utf8",
     "files.autoGuessEncoding": false,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "Batis",
+        "Jdbc"
+    ]
 }

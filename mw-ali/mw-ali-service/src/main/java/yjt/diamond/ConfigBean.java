@@ -1,47 +1,73 @@
 package yjt.diamond;
 
-import org.springframework.stereotype.Service;
-
 /**
- * 演示在Listener里把配置注入到这个bean里，注意是非线程安全
- *
  * @author chengxu
  */
-@Service
 public class ConfigBean {
+    private String stringValue;
+    private int intValue;
+    private boolean booleanValue;
+    private User user;
+    private String chineseValue;
 
-    private String id;
-    private int number;
+    public static class User {
+        private String name;
+        private int age;
 
-    private Foo foo;
+        public String getName() {
+            return name;
+        }
 
-    public String getId() {
-        return id;
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getStringValue() {
+        return stringValue;
     }
 
-    public int getNumber() {
-        return number;
+    public void setStringValue(String stringValue) {
+        this.stringValue = stringValue;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public int getIntValue() {
+        return intValue;
     }
 
-    public Foo getFoo() {
-        return foo;
+    public void setIntValue(int intValue) {
+        this.intValue = intValue;
     }
 
-    public void setFoo(Foo foo) {
-        this.foo = foo;
+    public boolean isBooleanValue() {
+        return booleanValue;
     }
 
-    @Override
-    public String toString() {
-        return "ConfigBean [id=" + id + ", number=" + number + ", foo=" + foo + "]";
+    public void setBooleanValue(boolean booleanValue) {
+        this.booleanValue = booleanValue;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getChineseValue() {
+        return chineseValue;
+    }
+
+    public void setChineseValue(String chineseValue) {
+        this.chineseValue = chineseValue;
+    }
 }

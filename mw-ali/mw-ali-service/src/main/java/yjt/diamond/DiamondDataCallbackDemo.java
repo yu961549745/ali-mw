@@ -1,43 +1,42 @@
 package yjt.diamond;
 
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.util.Properties;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.bind.RelaxedDataBinder;
 
 import com.alibaba.boot.diamond.annotation.DiamondListener;
 import com.alibaba.boot.diamond.listener.DiamondDataCallback;
+import org.springframework.boot.json.GsonJsonParser;
 
 /**
- * 通过 @DiamondListener注解，监听相关的配置项
- * 详见http://gitlab.alibaba-inc.com/middleware-container/pandora-boot/wikis/spring-boot-diamond
- *
- * @author chengxu
+ * @author 鱼泡
  */
-@DiamondListener(dataId = "com.taobao.middleware:configFromListener.properties")
+@DiamondListener(dataId = "yjt_diamond_test", groupId = "yjt")
 public class DiamondDataCallbackDemo implements DiamondDataCallback {
 
-    @Autowired
-    private ConfigBean configBean;
+    private ConfigBean configBean = new ConfigBean();
+    private RelaxedDataBinder binder = new RelaxedDataBinder(configBean);
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private String dataCahe;
-
-    public String getReceivedData() {
-        return dataCahe;
+    public ConfigBean getConfigBean() {
+        return configBean;
     }
 
     @Override
     public void received(String data) {
         try {
-            dataCahe = data;
             Properties properties = new Properties();
-            properties.load(new ByteArrayInputStream(data.getBytes()));
-            System.out.println("received from diamond listener: " + properties);
-
-            // 把properties的值注入到ConfigBean里
-            new RelaxedDataBinder(configBean).bind(new MutablePropertyValues(properties));
+            properties.load(new StringReader(data));
+            System.err.println("received from diamond listener: " + properties);
+            binder.bind(new MutablePropertyValues(properties));
+            System.err.println(gson.toJson(configBean));
         } catch (Exception e) {
             e.printStackTrace();
         }
