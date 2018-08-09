@@ -11,4 +11,14 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     List<User> getAllUser();
+
+    List<User> getUserByName(String name);
+
+    void insertByUser(User user);
+
+    void insertUsers(List<User> users);
+
+    void updateUser(User user);
+
+    void deleteByName(String name);
 }

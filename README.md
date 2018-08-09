@@ -293,14 +293,19 @@ spring.hsf.version=1.0.0.DAILY
 spring.hsf.timeout=2000
 ```
 
-# MyBatis
+# MyBatis + MySQL
+1. 配置数据源
 `application.properties` 
 ```
-# Spring boot 配置连接信息
 # 指定配置文件位置
 mybatis.config-location=classpath:/mybatis/mybatis-config.xml
+# mysql 数据源配置
+spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=true&
+spring.datasource.username=root
+spring.datasource.password=12345678
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 ```
-MyBitas 配置文件
+2. MyBitas 配置文件
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
@@ -311,4 +316,130 @@ MyBitas 配置文件
         <mapper resource="mybatis/salary-mapper.xml"/>
     </mappers>
 </configuration>
+```
+3. 配置 Mapper
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yjt.mapper.UserMapper">
+
+    <select id="getAllUser" resultType="yjt.data.User">
+        select * from `user`;
+    </select>
+
+    <select id="getUserByName" resultType="yjt.data.User">
+        select * from `user` where `name`=#{name};
+    </select>
+
+    <insert id="insertByUser" parameterType="yjt.data.User">
+        insert into `user` (`name`,age) values
+        (#{name},#{age});
+    </insert>
+
+    <insert id="insertUsers" parameterType="java.util.List">
+        insert into `user`(`name`,age) values
+        <foreach collection="list" item="user" separator=",">
+            (#{user.name},#{user.age})
+        </foreach>
+    </insert>
+
+    <update id="updateUser" parameterType="yjt.data.User">
+        update `user` set
+        `name`=#{name},
+        age=#{age}
+        where `name`=#{name};
+    </update>
+
+    <delete id="deleteByName">
+        delete from `user` where `name`=#{name};
+    </delete>
+    
+</mapper>
+```
+4. 编写 Java 接口
+```java
+@Mapper
+public interface UserMapper {
+    List<User> getAllUser();
+
+    List<User> getUserByName(String name);
+
+    void insertByUser(User user);
+
+    void insertUsers(List<User> users);
+
+    void updateUser(User user);
+
+    void deleteByName(String name);
+}
+```
+5. 调用 Java 接口
+```java
+@RestController
+@RequestMapping("/db")
+public class DbController {
+    @Autowired
+    private UserMapper userMapper;
+
+    @RequestMapping("/get-all-user")
+    public List<User> getAllUser() {
+        return userMapper.getAllUser();
+    }
+
+    @RequestMapping("/get-user-by-name")
+    public List<User> getUserByName(String name) {
+        return userMapper.getUserByName(name);
+    }
+
+    @RequestMapping("/insert-by-user")
+    public List<User> insertByUser(String name, int age) {
+        userMapper.insertByUser(newUser(name, age));
+        return userMapper.getAllUser();
+    }
+
+    @RequestMapping("/insert-users")
+    public List<User> insertUsers(@RequestBody List<User> users) {
+        userMapper.insertUsers(users);
+        return userMapper.getAllUser();
+    }
+
+    @RequestMapping("/update-user")
+    public User updateUser(String name, int age) {
+        User user = newUser(name, age);
+        userMapper.updateUser(user);
+        return user;
+    }
+
+    @RequestMapping("/delete-by-name")
+    public List<User> deleteByName(String name) {
+        userMapper.deleteByName(name);
+        return userMapper.getAllUser();
+    }
+
+    private User newUser(String name, int age) {
+        User user = new User();
+        user.setName(name);
+        user.setAge(age);
+        return user;
+    }
+}
+```
+6. 外部调用测试
+```javascript
+url = 'http://localhost:7001/db'
+function success(data) { console.log(data) }
+$.get(url + '/get-all-user', '', success)
+$.get(url + '/get-user-by-name', 'name=b', success)
+$.get(url + '/insert-by-user', 'name=c&age=123', success)
+$.ajax({
+    method: 'post',
+    url: url + '/insert-users',
+    contentType: 'application/json',
+    data: JSON.stringify([{ name: 'haha', age: 1 }, { name: 'hehe', age: 2 }]),
+    success: (data) => { console.log(data) }
+})
+$.get(url + '/update-user', 'name=b&age=123', success)
+$.get(url + '/delete-by-name', 'name=haha', success)
 ```
